@@ -179,7 +179,7 @@ Fairness datasets are grouped into three broad types according to how the evalua
 constructed and used.
 
 <p align="center">
-    <img src="img/dataset.pdf" width="800">
+    <img src="img/dataset.jpg" width="800">
 </p>
 
 | Dataset Type | Subcategory | Example Datasets / Sources |
@@ -198,7 +198,7 @@ constructed and used.
 Existing protocols are organized into four families by their primary evaluation focus.
 
 <p align="center">
-    <img src="img/benchmark.pdf" width="800">
+    <img src="img/benchmark.jpg" width="800">
 </p>
 
 **Sensitive Attribute** — Modify sensitive attributes (e.g., gender, age) in prompts and measure
