@@ -1,9 +1,9 @@
 # Rethinking Fairness in LLM-Based Recommender Systems: A Survey
 
-<!-- TODO: replace XXXX.XXXXX with the real arXiv id, and OWNER/REPO with the GitHub repo once available. -->
+<!-- TODO: replace XXXX.XXXXX with the real arXiv id once available. -->
 [![Static Badge](https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b?logo=arXiv)](https://arxiv.org/abs/XXXX.XXXXX)
-![GitHub Repo stars](https://img.shields.io/github/stars/OWNER/REPO?style=flat&logo=GitHub)
-![GitHub last commit](https://img.shields.io/github/last-commit/OWNER/REPO?path=README.md&style=flat&logo=GitHub)
+![GitHub Repo stars](https://img.shields.io/github/stars/MiuLab/TrustLMRec?style=flat&logo=GitHub)
+![GitHub last commit](https://img.shields.io/github/last-commit/MiuLab/TrustLMRec?path=README.md&style=flat&logo=GitHub)
 
 - This is the official repository of the paper **Rethinking Fairness in LLM-Based Recommender Systems: A Survey**.
 
@@ -56,10 +56,6 @@ This survey organizes fairness in LLM-based recommender systems (**LLM4Rec**) th
 explainability, privacy, robustness, and controllability — and consolidates the evaluation landscape
 and mitigation strategies. To the best of our knowledge, this is the first survey specifically focused
 on fairness in LLM4Rec.
-
-<p align="center">
-    <img src="img/taxonomy.png" width="700">
-</p>
 
 ### :gear: The Roles of LLMs in Recommendation
 
@@ -182,6 +178,10 @@ and feedback incorporation — systematically shape recommendation outcomes acro
 Fairness datasets are grouped into three broad types according to how the evaluation data are
 constructed and used.
 
+<p align="center">
+    <img src="img/dataset.pdf" width="800">
+</p>
+
 | Dataset Type | Subcategory | Example Datasets / Sources |
 |--------------|-------------|----------------------------|
 | Curated Candidate-Pool | Curated Item Catalogs | IMDb, MTV, Spotify, QS World University Rankings |
@@ -196,6 +196,10 @@ constructed and used.
 #### :white_check_mark: Fairness Evaluation Protocols
 
 Existing protocols are organized into four families by their primary evaluation focus.
+
+<p align="center">
+    <img src="img/benchmark.pdf" width="800">
+</p>
 
 **Sensitive Attribute** — Modify sensitive attributes (e.g., gender, age) in prompts and measure
 whether outputs change. Metrics are similarity- or ranking-based (e.g., SNSR, SNSV, Jaccard@K,
