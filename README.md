@@ -2,8 +2,8 @@
 
 [![Static Badge](https://img.shields.io/badge/arXiv-2606.28340-b31b1b?logo=arXiv)](https://arxiv.org/abs/2606.28340)
 [![Static Badge](https://img.shields.io/badge/Findings%20of%20EMNLP-2026-blue)](https://arxiv.org/abs/2606.28340)
-![GitHub Repo stars](https://img.shields.io/github/stars/MiuLab/TrustLMRec?style=flat&logo=GitHub)
-![GitHub last commit](https://img.shields.io/github/last-commit/MiuLab/TrustLMRec?path=README.md&style=flat&logo=GitHub)
+![GitHub Repo stars](https://img.shields.io/github/stars/MiuLab/FairLMRec?style=flat&logo=GitHub)
+![GitHub last commit](https://img.shields.io/github/last-commit/MiuLab/FairLMRec?path=README.md&style=flat&logo=GitHub)
 
 - This is the official repository of the paper **Rethinking Fairness in LLM-Based Recommender Systems: A Survey**, accepted to **Findings of EMNLP 2026**.
 
