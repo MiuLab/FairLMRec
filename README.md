@@ -1,11 +1,11 @@
 # Rethinking Fairness in LLM-Based Recommender Systems: A Survey
 
-<!-- TODO: replace XXXX.XXXXX with the real arXiv id once available. -->
-[![Static Badge](https://img.shields.io/badge/arXiv-XXXX.XXXXX-b31b1b?logo=arXiv)](https://arxiv.org/abs/XXXX.XXXXX)
+[![Static Badge](https://img.shields.io/badge/arXiv-2606.28340-b31b1b?logo=arXiv)](https://arxiv.org/abs/2606.28340)
+[![Static Badge](https://img.shields.io/badge/Findings%20of%20EMNLP-2026-blue)](https://arxiv.org/abs/2606.28340)
 ![GitHub Repo stars](https://img.shields.io/github/stars/MiuLab/TrustLMRec?style=flat&logo=GitHub)
 ![GitHub last commit](https://img.shields.io/github/last-commit/MiuLab/TrustLMRec?path=README.md&style=flat&logo=GitHub)
 
-- This is the official repository of the paper **Rethinking Fairness in LLM-Based Recommender Systems: A Survey**.
+- This is the official repository of the paper **Rethinking Fairness in LLM-Based Recommender Systems: A Survey**, accepted to **Findings of EMNLP 2026**.
 
 - Authors: Song-Duo Ma, Chu-Yun Chen, Bang-An Li, Pin-Yu Chen, Shau-Yung Hsu, Yun-Nung Chen (National Taiwan University, Taipei, Taiwan).
 
@@ -24,14 +24,17 @@
     + [Data and Propensity Bias](#data-and-propensity-bias)
     + [System and Optimization Bias](#system-and-optimization-bias)
   * [:white_check_mark: Fairness Targets](#white_check_mark-fairness-targets)
+  * [:white_check_mark: Taxonomy Assignment and Coverage](#white_check_mark-taxonomy-assignment-and-coverage)
 - [:bar_chart: Evaluation Resources and Protocols](#bar_chart-evaluation-resources-and-protocols)
   * [:white_check_mark: Datasets and Data Sources](#white_check_mark-datasets-and-data-sources)
   * [:white_check_mark: Fairness Evaluation Protocols](#white_check_mark-fairness-evaluation-protocols)
+  * [:white_check_mark: Evaluation Gaps and Limitations](#white_check_mark-evaluation-gaps-and-limitations)
 - [:wrench: Fairness Mitigation in LLM4Rec](#wrench-fairness-mitigation-in-llm4rec)
   * [:white_check_mark: Input-Level Mitigation](#white_check_mark-input-level-mitigation)
   * [:white_check_mark: Data-Level Mitigation](#white_check_mark-data-level-mitigation)
   * [:white_check_mark: Model-Level Mitigation](#white_check_mark-model-level-mitigation)
-  * [:white_check_mark: Re-Ranking Mitigation](#white_check_mark-re-ranking-mitigation)
+  * [:white_check_mark: Output-Level Mitigation](#white_check_mark-output-level-mitigation)
+  * [:white_check_mark: Key Takeaways Across Mitigation Strategies](#white_check_mark-key-takeaways-across-mitigation-strategies)
 - [:shield: Cross-Cutting Trustworthy Issues](#shield-cross-cutting-trustworthy-issues)
   * [:white_check_mark: Fairness and Explainability](#white_check_mark-fairness-and-explainability)
   * [:white_check_mark: Fairness and Privacy](#white_check_mark-fairness-and-privacy)
@@ -171,6 +174,17 @@ and feedback incorporation — systematically shape recommendation outcomes acro
   particularly challenging because improving personalization may unintentionally amplify exposure
   disparities among items or providers.
 
+#### :white_check_mark: Taxonomy Assignment and Coverage
+
+- **Assignment rules** — each study is assigned to a *single primary cell*, determined by the bias
+  source it mainly evaluates or mitigates and the stakeholder outcome it *directly measures*.
+  Two-sided assignment requires joint evaluation of user-side utility and item-side exposure, not
+  merely a discussion of both.
+- **Interpreting sparse cells** — sparse cells reflect *measurement constraints*, not lack of
+  importance. Item-side social bias is especially hard to study explicitly, since provider-side
+  protected attributes are rarely available and provider benefit is domain-dependent, making it
+  difficult to separate provider attributes from popularity effects.
+
 ### :bar_chart: Evaluation Resources and Protocols
 
 #### :white_check_mark: Datasets and Data Sources
@@ -195,7 +209,8 @@ constructed and used.
 
 #### :white_check_mark: Fairness Evaluation Protocols
 
-Existing protocols are organized into four families by their primary evaluation focus.
+Existing protocols are organized into four families by their primary evaluation focus, plus a
+cross-cutting discussion of fairness–utility **trade-offs**.
 
 <p align="center">
     <img src="img/benchmark.jpg" width="800">
@@ -264,9 +279,30 @@ long-tail. Metrics include Gini Index, HHI, entropy, MGU/DGU, and long-tail cove
 | arXiv'26 | [Echoes in the Loop: Diagnosing Risks under Feedback Loops](https://arxiv.org/abs/2602.07442) |
 | arXiv'26 | [Collab-REC: An LLM-Based Agentic Framework for Balancing Recommendations in Tourism](https://arxiv.org/abs/2508.15030) |
 
+**Trade-Offs** — Fairness gains often interact with utility metrics such as NDCG and hit ratio:
+reducing popularity bias can lower measured relevance, and enforcing group-level parity can weaken
+personalization. The trade-off is not inevitable — when an intervention removes an underlying bias
+(popularity bias, selection bias, spurious correlations), fairness and recommendation quality can
+improve together, which is why fairness and utility should be reported jointly.
+
+| Venue | Paper |
+|-------|-------|
+| CIKM'25 | [LeadFairRec: Counterfactual Debiasing for Two-Sided Fairness](https://doi.org/10.1145/3746252.3761126) |
+| arXiv'26 | [De-Conflating Preference and Qualification for Job Recommendation (JobRec)](https://arxiv.org/abs/2602.03097) |
+
+#### :white_check_mark: Evaluation Gaps and Limitations
+
+- **Inconsistent fairness definitions** across studies make results hard to compare.
+- **Heavy reliance on synthetic prompting scenarios** rather than realistic deployment settings.
+- **Single-run reporting** despite the stochasticity of generative recommendation, leaving the
+  stability of observed fairness disparities unclear.
+- **Inadequate metrics for open-ended generation** and a shortage of interactive, multi-turn
+  evaluation settings.
+- **Possible evaluator bias** when LLM-as-a-judge protocols are used without human validation.
+
 ### :wrench: Fairness Mitigation in LLM4Rec
 
-Mitigation interventions are organized into four levels: input, data, model, and re-ranking.
+Mitigation interventions are organized into four levels: input, data, model, and output.
 
 #### :white_check_mark: Input-Level Mitigation
 Guides LLMs toward fair outcomes during inference without altering parameters (e.g., online prompt
@@ -300,15 +336,27 @@ gated adapters, fairness regularization, bi-level optimization, MoE + contrastiv
 | arXiv'25 | [BiFair: Fairness-Aware Training via Bi-Level Optimization](https://arxiv.org/abs/2507.04294) |
 | DASFAA'25 | [Improving Multi-Attribute Fairness through a Mixture-of-Experts Contrastive Learning Method](https://doi.org/10.1007/978-981-95-4158-4_4) |
 
-#### :white_check_mark: Re-Ranking Mitigation
-Modifies decoding to curtail homogeneity (D3) and applies post-hoc re-ranking as a secondary fairness
-filter (explainable re-rankers, IPS-based dual debiasing).
+#### :white_check_mark: Output-Level Mitigation
+Adjusts recommendations at decoding and post-processing time without modifying model parameters:
+debiasing-diversifying decoding (D3) curtails representation homogeneity in the autoregressive
+process, post-hoc re-ranking acts as a secondary fairness filter, LLMs serve as explainable
+re-rankers that audit and explicitly adjust candidate rankings, and Inverse Propensity Score (IPS)
+based dual debiasing corrects exposure disparities.
 
 | Venue | Paper |
 |-------|-------|
 | EMNLP'24 | [Decoding Matters: Addressing Amplification Bias and Homogeneity Issue (D3)](https://aclanthology.org/2024.emnlp-main.589/) |
 | arXiv'25 | [LLM as Explainable Re-Ranker for Recommendation System](https://arxiv.org/abs/2512.03439) |
 | SIGIR'25 | [Dual Debiasing in LLM-Based Recommendation](https://doi.org/10.1145/3726302.3730181) |
+
+#### :white_check_mark: Key Takeaways Across Mitigation Strategies
+
+- Strategies differ mainly in **intervention depth** and the **system access** they require:
+  input- and output-level methods are applicable to closed-source or API-only systems, while
+  data- and model-level interventions assume access to training data or parameters.
+- **Fairness and utility are not an inevitable trade-off** — correcting an underlying bias can
+  improve both at once, so mitigation should be evaluated jointly across fairness and accuracy
+  metrics rather than reported as a single-axis gain.
 
 ### :shield: Cross-Cutting Trustworthy Issues
 
@@ -381,6 +429,12 @@ making fairness a controllable behavior rather than only an evaluative property.
   and faithfulness is underexplored: biased recommendations may be made persuasive by fluent but
   unfaithful explanations.
 
+- **Toward Multilingual and Cultural Fairness** — The reviewed evidence is predominantly
+  English-centric, yet fairness disparities persist and shift across languages. Moving beyond English
+  requires more than translating existing benchmarks: it calls for culturally grounded fairness
+  definitions, validated translations, and explicit cross-lingual robustness assessment, so that
+  future benchmarks cover diverse languages and culturally informed fairness expectations.
+
 ## :green_book: Citations
 If you find our survey and this repository beneficial for your research, please kindly cite our paper.
 
@@ -389,9 +443,9 @@ If you find our survey and this repository beneficial for your research, please 
       title={Rethinking Fairness in LLM-Based Recommender Systems: A Survey},
       author={Song-Duo Ma and Chu-Yun Chen and Bang-An Li and Pin-Yu Chen and Shau-Yung Hsu and Yun-Nung Chen},
       year={2026},
-      eprint={XXXX.XXXXX},
+      eprint={2606.28340},
       archivePrefix={arXiv},
       primaryClass={cs.IR},
-      url={https://arxiv.org/abs/XXXX.XXXXX},
+      url={https://arxiv.org/abs/2606.28340},
 }
 ```
